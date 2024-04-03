@@ -22,4 +22,9 @@ class ProductPage(BasePage):
         added_product_price = self.browser.find_element(*ProductPageLocators.ADDED_PRODUCT_PRICE).text
         return added_product_price
     
+    def should_not_be_success_message_element_not_present(self): # Проверяет, что элемент не отображается
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is presented, but should not be"
+
+    def should_not_be_success_message_element_disappeared(self): # Проверяет, что элемент отображается, но затем исчезает
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is presented, but should not be"
 
