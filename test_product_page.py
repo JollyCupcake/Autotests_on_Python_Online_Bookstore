@@ -27,4 +27,40 @@ def test_guest_can_add_product_to_basket(browser, promocode):
     assert product_page.get_product_name() == product_page.get_added_product_name(), "Product added name is not equal to the product original name"
     assert product_page.get_product_price() == product_page.get_added_product_price(), "Basket price is not equal to the product original price"
 
+@pytest.mark.xfail
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
+    product_page.open()                       
+    product_page.add_product_to_basket()  # вызываем метод добавления товара в корзину
+    product_page.solve_quiz_and_get_code() #вызываем метод расчёта
+    # time.sleep(5)
+    product_page.should_not_be_success_message_element_not_present() 
 
+def test_guest_cant_see_success_message(browser):
+    link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
+    product_page.open()                       
+    product_page.should_not_be_success_message_element_not_present() 
+    
+@pytest.mark.xfail
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
+    product_page.open()                       
+    product_page.add_product_to_basket()  # вызываем метод добавления товара в корзину
+    product_page.solve_quiz_and_get_code() #вызываем метод расчёта
+    # time.sleep(1)
+    product_page.should_not_be_success_message_element_disappeared()
+
+def test_guest_should_see_login_link_on_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_login_link()
+
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.go_to_login_page()
