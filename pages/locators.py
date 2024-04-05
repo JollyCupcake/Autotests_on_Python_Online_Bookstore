@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link") # Ссылка перехода на форму логина
+    BASKET_LINK = (By.CSS_SELECTOR, "span .btn-default:nth-child(1)") # Кнопка перехода в корзину
 
 class LoginPageLocators():
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form") # Форма логина
@@ -19,3 +20,7 @@ class ProductPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+class BasketPageLocators():
+    BASKET_EMPTY = (By.CSS_SELECTOR, "#content_inner>p") # Сообщение, что корзина пуста
+    BASKET_CONTAINS_PRODUCTS = (By.CSS_SELECTOR, "[class='basket-items']") # Наименование блока, в котором отображаются добавленные товары
