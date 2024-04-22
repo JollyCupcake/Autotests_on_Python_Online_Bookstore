@@ -8,6 +8,10 @@ class MainPageLocators():
 class LoginPageLocators():
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form") # Форма логина
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form") # Форма регистрации
+    REGISTER_EMAIL = (By.CSS_SELECTOR, "#id_registration-email") # Email на форме регистрации
+    REGISTER_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password1l") # Пароль на форме регистрации
+    REGISTER_CONFIRM_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password2") # Подтверждение пароля на форме регистрации
+    REGISTER_BUTTON = (By.NAME, "registration_submit") # Кнопка Register
 
 class ProductPageLocators():
     ADD_TO_BASKET_BUTTON = (By.CLASS_NAME, "btn-add-to-basket") # Кнопка "Добавить в корзину"
@@ -20,6 +24,7 @@ class ProductPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 class BasketPageLocators():
     BASKET_EMPTY = (By.CSS_SELECTOR, "#content_inner>p") # Сообщение, что корзина пуста
