@@ -4,29 +4,37 @@ from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .pages.base_page import BasePage
 import time
 import pytest
 
-@pytest.mark.parametrize('promocode', ["?promo=offer0",
-                                       "?promo=offer1",
-                                       "?promo=offer2",
-                                       "?promo=offer3",
-                                       "?promo=offer4",
-                                       "?promo=offer5",
-                                       "?promo=offer6",
-                                       pytest.param("?promo=offer7", marks=pytest.mark.xfail), 
-                                       "?promo=offer8",
-                                       "?promo=offer9"])
-                                       
-def test_guest_can_add_product_to_basket(browser, promocode):
-    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/{promocode}"
-    product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
-    product_page.open()                       
-    product_page.add_product_to_basket()  # вызываем метод добавления товара в корзину
-    product_page.solve_quiz_and_get_code() #вызываем метод расчёта
-    time.sleep(5)
-    assert product_page.get_product_name() == product_page.get_added_product_name(), "Product added name is not equal to the product original name"
-    assert product_page.get_product_price() == product_page.get_added_product_price(), "Basket price is not equal to the product original price"
+                                    
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/"
+        login_page = LoginPage(browser, link)
+        login_page.open()
+        login_page.go_to_login_page()
+        login_page.register_new_user()
+        login_page.should_be_authorized_user()
+    
+    def test_user_cant_see_success_message(self, browser):
+        link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/hacking-exposed-wireless_208/"
+        product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
+        product_page.open()                       
+        product_page.should_not_be_success_message_element_not_present() 
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/hacking-exposed-wireless_208/"
+        product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
+        product_page.open()                       
+        product_page.add_product_to_basket()  # вызываем метод добавления товара в корзину
+        # product_page.solve_quiz_and_get_code() #вызываем метод расчёта лоя страниц с промо
+        time.sleep(5)
+        assert product_page.get_product_name() == product_page.get_added_product_name(), "Product added name is not equal to the product original name"
+        assert product_page.get_product_price() == product_page.get_added_product_price(), "Basket price is not equal to the product original price"
+
 
 @pytest.mark.xfail
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
@@ -36,12 +44,6 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     product_page.add_product_to_basket()  # вызываем метод добавления товара в корзину
     product_page.solve_quiz_and_get_code() #вызываем метод расчёта
     # time.sleep(5)
-    product_page.should_not_be_success_message_element_not_present() 
-
-def test_guest_cant_see_success_message(browser):
-    link = "https://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/?promo=newYear"
-    product_page = ProductPage(browser, link) # инициализируем Page Object ProductPage
-    product_page.open()                       
     product_page.should_not_be_success_message_element_not_present() 
     
 @pytest.mark.xfail
