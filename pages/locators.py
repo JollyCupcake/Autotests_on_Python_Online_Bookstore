@@ -9,7 +9,7 @@ class LoginPageLocators():
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form") # Форма логина
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form") # Форма регистрации
     REGISTER_EMAIL = (By.CSS_SELECTOR, "#id_registration-email") # Email на форме регистрации
-    REGISTER_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password1l") # Пароль на форме регистрации
+    REGISTER_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password1") # Пароль на форме регистрации
     REGISTER_CONFIRM_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password2") # Подтверждение пароля на форме регистрации
     REGISTER_BUTTON = (By.NAME, "registration_submit") # Кнопка Register
 
