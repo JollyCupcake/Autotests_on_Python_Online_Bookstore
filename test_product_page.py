@@ -32,9 +32,8 @@ class TestUserAddToBasketFromProductPage():
         product_page.open()
         product_page.add_product_to_basket()
         time.sleep(5)
-        assert product_page.get_product_name() == product_page.get_added_product_name(), "Product added name is not equal to the product original name"
-        assert product_page.get_product_price() == product_page.get_added_product_price(), "Basket price is not equal to the product original price"
-
+        product_page.product_name_equals_added_product_name()
+        product_page.product_price_equals_added_product_price()
 
 @pytest.mark.need_review
 def test_guest_can_add_product_to_basket(browser):
@@ -44,8 +43,8 @@ def test_guest_can_add_product_to_basket(browser):
     product_page.add_product_to_basket()
     product_page.solve_quiz_and_get_code()
     time.sleep(3)
-    assert product_page.get_product_name() == product_page.get_added_product_name(), "Product added name is not equal to the product original name"
-    assert product_page.get_product_price() == product_page.get_added_product_price(), "Basket price is not equal to the product original price"
+    product_page.product_name_equals_added_product_name()
+    product_page.product_price_equals_added_product_price()
 
 @pytest.mark.xfail
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
